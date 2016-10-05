@@ -12,12 +12,19 @@
   )
 )
 
-(define (iterative n one-less two-less three-less current-total)
-  (cond
-    ((< n 3) n)
-    (else
-      (iterative (- n 1) )
+(define (iterative n max-n one-less two-less three-less current-total)
+  (if (> n max-n)
+    current-total
+    (let ((current-iteration (+ one-less (* 2 two-less) (* 3 three-less))))
+      (iterative (+ n 1) max-n
+                 current-iteration one-less two-less
+                 (+ current-total current-iteration)
+      )
     )
   )
+)
+
+(define (start-iterative n)
+  (iterative 3 n 2 1 0 0)
 )
 
