@@ -1,0 +1,21 @@
+(define (make-iterative-log-complexity even? double halve-counter decrement function base)
+  (letrec ((main (lambda (value counter)
+             (aux value counter base)
+           ))
+           (aux (lambda (value counter total)
+             (cond ((= counter 0) total)
+                   ((even? counter) (let ((half (halve-counter counter)))
+                                      (aux value half (function total (main value half)))
+                                    )
+                   )
+                   (else (aux value (- counter 1) (function value total)))
+             )
+           ))
+          )
+    main
+  )
+)
+
+(define mul (make-iterative-log-complexity even? (lambda (n) (* n 2)) (lambda (n) (/ n 2)) (lambda (n) (- n 1)) + 0))
+(define expon (make-iterative-log-complexity even? (lambda (n) (* n 2)) (lambda (n ) (/ n 2)) (lambda (n) (- n 1)) * 1))
+
