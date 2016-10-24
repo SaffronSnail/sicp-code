@@ -8,3 +8,13 @@
 	)
 )
 
+(define (interval=? i1 i2)
+	(and (= (lower-interval i1) (lower-interval i2))
+			 (= (upper-interval i1) (upper-interval i2))
+	)
+)
+
+(define (interval->string i)
+	(string-append "(" (number->string (lower-interval i)) ", " (number->string (upper-interval i)) ")")
+)
+
