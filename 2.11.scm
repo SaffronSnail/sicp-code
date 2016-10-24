@@ -1,25 +1,12 @@
-(define (cons-percent num)
-	(/ num 100)
-)
+(load "2.7.scm")
 
-(define cons-interval-vals cons)
-(define lower-interval car)
-(define upper-interval cdr)
-
-(define (cons-interval-base-tol base tolerance)
-	(let ((tol-val (* base tolerance)))
-		(cons-interval-vals (- base tol-val) (+ base tol-val))
+(define (multiply-interval i1 i2)
+	(let* ((case1  (symbol->string (neg-pos-case i1)))
+				 (case2  (symbol->string (neg-pos-case-i2)))
+				 (solver (eval (string->symbol (string-append "multiply-interval-" case1 "-" case2))))
+				)
+		(solver i1 i2)
 	)
-)
-
-(define (add-interval i1 i2)
-	(cons-interval (+ (lower-interval i1) (lower-interval i2))
-								 (+ (upper-interval i1) (upper-interval i2))
-	)
-)
-
-(define (subtract-interval i1 i2)
-	#f
 )
 
 (define (neg-pos-case interval)
@@ -32,38 +19,6 @@
 				'neg-pos
 			)
 			'pos-pos ; it's invalid to have a pos-neg case
-		)
-	)
-)
-
-(define (multiply-interval i1 i2)
-	(let* ((case1  (symbol->string (neg-pos-case i1)))
-				 (case2  (symbol->string (neg-pos-case-i2)))
-				 (solver (string->symbol (string-append "multiply-interval-" case1 "-" case2)))
-				)
-		(solver i1 i2)
-	)
-)
-
-(define (divide-interval i1 i2)
-	(when (or (= (upper-interval i2) 0) (= (lower-interval i2) 0)
-						(= (upper-interval i1) 0) (= (lower-interval i2) 0)
-				)
-		(error "cannot divide when an interval endpoint is 0!")
-	)
-
-	(cons-interval-vals (/ (lower-interval i1) (upper-interval i2))
-								 (/ (upper-interval i1) (lower-interval i2))
-	)
-)
-
-(define one-as-interval (cons-interval-vals 1 1))
-(define (inverse-interval i) (divide-interval one-as-interval i))
-
-(define (parallel-equivalent i1 i2)
-	(inverse-interval
-		(add-interval (inverse-interval i1)
-									(inverse-interval i2)
 		)
 	)
 )
