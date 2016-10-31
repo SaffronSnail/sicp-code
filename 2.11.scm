@@ -2,8 +2,8 @@
 
 (define (multiply-interval i1 i2)
 	(let* ((case1  (symbol->string (neg-pos-case i1)))
-				 (case2  (symbol->string (neg-pos-case-i2)))
-				 (solver (eval (string->symbol (string-append "multiply-interval-" case1 "-" case2))))
+				 (case2  (symbol->string (neg-pos-case i2)))
+				 (solver (eval (string->symbol (string-append "multiply-interval-" case1 "-" case2)) (interaction-environment)))
 				)
 		(solver i1 i2)
 	)
