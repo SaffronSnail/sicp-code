@@ -2,9 +2,10 @@
 
   (define (withdraw amount)
     (if (>= balance amount)
-    (begin (set! balance (- balance amount))
-    balance)
-    "Insufficient funds")
+      (begin (set! balance (- balance amount))
+             balance)
+      "Insufficient funds"
+    )
   )
 
   (define (deposit amount)
