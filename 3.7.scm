@@ -1,0 +1,21 @@
+(define (make-joint acc existing-password new-password)
+  (define (withdraw amount)
+    ((acc existing-password 'withdraw) amount)
+  )
+
+  (define (deposit amount)
+    ((acc existing-password 'deposit) amount)
+  )
+
+  (lambda (given-password message)
+    (if (eq? given-password new-password)
+      (begin
+        (cond ((eq? message 'withdraw) withdraw)
+              ((eq? message 'deposit) deposit)
+              (else (error "Unknown request to dispatcher from make-joint" message))
+        )
+      )
+      (error "Bad password!")
+    )
+  )
+)
