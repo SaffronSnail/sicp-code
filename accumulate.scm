@@ -17,5 +17,5 @@
   (iteration op (reverse sequence))
 )
 
-(define accumulate accumulate-recursive)
+(define accumulate accumulate-iterative)
 
