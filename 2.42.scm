@@ -27,20 +27,40 @@
 
 (define (safe? test-column rows)
   (define test-row (index test-column rows))
+  (define (same-row? other-row)
+    (= test-row other-row)
+  )
+  (define (same-diaganol? other-row other-column)
+    (= (abs (- test-row other-row))
+       (abs (- test-column other-column))
+    )
+  )
+
   (define (single-test other-column)
     (if (= test-column other-column)
       #t
       (let ((other-row (index other-column rows)))
-        (not (or (= test-row other-row)
-                 (= (- test-row other-row)
-                    (- test-column other-column)
-                 )
+        (not (or (same-row? other-row)
+                 (same-diaganol? other-row other-column)
              )
         )
       )
     )
   )
-  (map single-test (enumerate-interval 1 (length rows)))
+
+  ; mapping single-test returns a list of booleans; this returns true if all of
+  ; them are true, otherwise false; I tried to use `map` and `or`, but it
+  ; (understandably) didn't like it when I tried using a macro (or) as an
+  ; argument to map
+  (define* (none-are-false l)
+    (cond 
+      ((null? l) #t)
+      ((not (car l)) #f)
+      (else (none-are-false (cdr l)))
+    )
+  )
+     
+  (none-are-false (map single-test (enumerate-interval 1 (length rows))))
 )
 
 
