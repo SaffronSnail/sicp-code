@@ -15,9 +15,15 @@
                         )
 )
 
+; a)
 ; both of these algorithms traverse the tree in in-fix order; that is, they
 ; both visit the left node, then the current node, then the right node.
 ; Therefore, they will both always produce the same list.
+
+; b)
+; tree->list-1 requires significantly more steps than tree->list-2. This is
+; because tree->list-1 is a recursive algorithm while tree->list-2 is an
+; iterative algorithm
 
 (define (tree->list-1 tree)
   (if (null? tree)
