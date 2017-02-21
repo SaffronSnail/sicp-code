@@ -52,3 +52,5 @@
   (copy-to-list tree '())
 )
 
+(define tree->list tree->list-2)
+
