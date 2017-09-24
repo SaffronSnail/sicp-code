@@ -1,0 +1,12 @@
+(define (lookup given-key records)
+  (let (current-key (key (car records)))
+    (cond ((null? records) #:f)
+          ((equal? given-key current-key) (car records))
+          ((< given-key current-key) (lookup given-key (left-branch records)))
+          (else ; (> given-key current-key)
+            (lookup given-key (right-branch records))
+          )
+    )
+  )
+)
+
