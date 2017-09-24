@@ -3,17 +3,17 @@
 ; O(n/2) time in the average case), but I can't find a better way of doing it
 ; because you can't insert into the middle of a list without being destructive.
 (define* (adjoin-set x set #:key (beginning-of-set-reverse '()))
-  (cond ((null? set) (reverse (cons x beginning-of-set)))
+  (cond ((null? set) (reverse (cons x beginning-of-set-reverse)))
         ((< x (car set))
-         (adjoin-set x (cdr set) 
-                     #:beginning-of-set-reverse (cons x beginning-of-set)
+         (adjoin-set x (cdr set)
+                     #:beginning-of-set-reverse (cons x beginning-of-set-reverse)
          )
         )
         ((= x (car set))
-           set
+         set
         )
         ((> x (car set))
-         (append (reverse (cons x beginning-of-set)) set)
+         (append (reverse (cons x beginning-of-set-reverse)) set)
         )
   )
 )
